@@ -1,12 +1,9 @@
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Set;
 
-import model.Model;
-import model.ModelClass;
+import anotations.Entity;
 import org.reflections.Reflections;
-import serilizers.GenericSerializer;
 
 public class Main {
   public static void main(String[] args) {
@@ -16,10 +13,11 @@ public class Main {
   }
 
   private static void createJsonFiles() {
-    Reflections reflections = new Reflections("model");
-    Set<Class<? extends Model>> subTypes = reflections.getSubTypesOf(Model.class);
 
-    subTypes.forEach((item) -> {
+    Reflections reflections = new Reflections("model");
+    Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Entity.class);
+
+    annotated.forEach((item) -> {
       File fileToCreate = new File("./data/" + item.getCanonicalName() + ".json");
       try {
         fileToCreate.createNewFile();

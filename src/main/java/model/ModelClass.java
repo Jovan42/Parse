@@ -1,12 +1,13 @@
 package model;
 
-import com.google.gson.Gson;
+import anotations.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ModelClass extends Model {
+@Entity
+public class ModelClass {
 
     private Long id;
     private String name;

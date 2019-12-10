@@ -1,4 +1,7 @@
 package model;
 
-public class Model2Class extends Model {
+import anotations.Entity;
+
+@Entity
+public class Model2Class {
 }
