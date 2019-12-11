@@ -1,6 +1,7 @@
 import anotations.Controller;
 import anotations.Entity;
 import controllers.Initialize;
+import middlewares.AuthMiddleware;
 import org.reflections.Reflections;
 
 import java.io.File;
@@ -16,7 +17,8 @@ public class Main {
   public static void main(String[] args) {
     createJsonFiles();
     initializeControllers();
-
+      AuthMiddleware authMiddleware = new AuthMiddleware();
+      authMiddleware.init();
     //    UserService userService = new UserService();
     //    try {
     //      User user = userService.create(new User("Jovan", "Manojlovic", "123456789",

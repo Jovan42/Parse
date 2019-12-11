@@ -66,4 +66,8 @@ public class UserRepository implements BaseRepository<User, String> {
   protected static void writeInFile(List<User> list) throws IOException {
     Files.write(Paths.get(FILE_PATH), gson.toJson(list).getBytes(), StandardOpenOption.WRITE);
   }
+
+  public Optional<User> findByUsername(String username) throws FileNotFoundException {
+    return findAll().stream().filter((user) -> user.getUsername().equals(username)).findFirst();
+  }
 }
