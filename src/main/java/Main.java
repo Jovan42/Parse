@@ -1,7 +1,6 @@
 import anotations.Controller;
 import anotations.Entity;
-import com.google.gson.Gson;
-import controllers.BaseController;
+import controllers.Initialize;
 import org.reflections.Reflections;
 
 import java.io.File;
@@ -13,7 +12,6 @@ import java.nio.file.StandardOpenOption;
 import java.util.Set;
 
 public class Main {
-  private static Gson gson = new Gson();
 
   public static void main(String[] args) {
     createJsonFiles();
@@ -31,6 +29,7 @@ public class Main {
     //    }
   }
 
+  @SuppressWarnings("ResultOfMethodCallIgnored")
   private static void createJsonFiles() {
     File data = new File("./data");
     data.mkdir();
@@ -60,7 +59,7 @@ public class Main {
         (item) -> {
           try {
             Object o = item.getConstructors()[0].newInstance();
-            ((BaseController) o).init();
+            ((Initialize) o).init();
           } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
           }

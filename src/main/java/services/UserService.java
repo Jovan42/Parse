@@ -18,7 +18,8 @@ public class UserService implements BaseService<String, String> {
 
   @Override
   public String findById(String id) throws FileNotFoundException {
-    return gson.toJson(userRepository.findById(id).orElseThrow(NotFoundException::new));
+    return gson.toJson(
+        userRepository.findById(id).orElseThrow(() -> new NotFoundException("User", id)));
   }
 
   @Override
@@ -30,19 +31,21 @@ public class UserService implements BaseService<String, String> {
   public String create(String sUser) throws IOException {
     User user = gson.fromJson(sUser, User.class);
     validate(user);
-    return gson.toJson(userRepository.create(user).orElseThrow(NotFoundException::new));
+    return gson.toJson(
+        userRepository.create(user).orElseThrow(() -> new NotFoundException("User", user.getId())));
   }
 
   @Override
-  public String update (String sUser) throws IOException {
+  public String update(String sUser) throws IOException {
     User user = gson.fromJson(sUser, User.class);
     validate(user);
-    return gson.toJson(userRepository.update(user).orElseThrow(NotFoundException::new));
+    return gson.toJson(
+        userRepository.update(user).orElseThrow(() -> new NotFoundException("User", user.getId())));
   }
 
   @Override
   public void delete(String id) throws IOException {
-     userRepository.delete(id);
+    userRepository.delete(id);
   }
 
   @Override

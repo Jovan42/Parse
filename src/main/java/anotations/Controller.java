@@ -1,4 +1,3 @@
 package anotations;
 
-public @interface Controller {
-}
+public @interface Controller {}

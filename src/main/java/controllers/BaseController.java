@@ -3,10 +3,11 @@ package controllers;
 import services.BaseService;
 import spark.Spark;
 
-public abstract class BaseController<S extends BaseService> {
+public abstract class BaseController<S extends BaseService> implements Initialize {
   protected String BASE_URL;
   protected S service;
 
+  @Override
   public void init() {
     get();
     getById();
@@ -51,13 +52,13 @@ public abstract class BaseController<S extends BaseService> {
         });
   }
 
-  public void delete(){
+  public void delete() {
     Spark.delete(
-            BASE_URL + "/:id",
-            (req, res) -> {
-              res.type("application/json");
-              service.delete(req.params(":id"));
-              return "";
-            });
+        BASE_URL + "/:id",
+        (req, res) -> {
+          res.type("application/json");
+          service.delete(req.params(":id"));
+          return "";
+        });
   }
 }

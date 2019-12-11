@@ -5,7 +5,6 @@ import model.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.List;
 
 public interface BaseService<T, I> {
 
