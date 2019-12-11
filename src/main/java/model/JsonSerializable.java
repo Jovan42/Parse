@@ -1,5 +1,9 @@
 package model;
 
-public interface JsonSerializable {
-     String toJson();
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+
+public class JsonSerializable {
 }
