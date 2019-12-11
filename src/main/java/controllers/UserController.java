@@ -1,14 +1,16 @@
 package controllers;
 
+import anotations.Controller;
 import services.UserService;
 
 import static spark.Spark.*;
 
-public class UserController {
+@Controller
+public class UserController implements BaseController {
 
   private static UserService userService = new UserService();
 
-  public static void init() {
+  public void init() {
     get(
         "/users",
         (req, res) -> {
