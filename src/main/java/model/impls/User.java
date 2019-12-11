@@ -1,9 +1,11 @@
-package model;
+package model.impls;
 
 import anotations.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import model.BaseEntity;
+import model.Editable;
 
 import java.util.ArrayList;
 import java.util.HashMap;

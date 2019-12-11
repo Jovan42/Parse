@@ -1,7 +1,8 @@
-package controllers;
+package controllers.impls;
 
 import anotations.Controller;
-import services.UserService;
+import controllers.BaseController;
+import services.impls.UserService;
 
 @Controller
 public class UserController extends BaseController<UserService> {

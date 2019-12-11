@@ -1,10 +1,11 @@
-package services;
+package services.impls;
 
 import com.google.gson.Gson;
 import exceptions.BadRequestException;
 import exceptions.NotFoundException;
-import model.User;
-import repositories.UserRepository;
+import model.impls.User;
+import repositories.impls.UserRepository;
+import services.BaseService;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
