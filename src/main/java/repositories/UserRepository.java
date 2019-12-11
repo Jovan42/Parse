@@ -14,6 +14,7 @@ import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class UserRepository implements BaseRepository<User, String> {
   private static final String FILE_PATH = "./data/" + User.class.getCanonicalName() + ".json";
@@ -51,6 +52,14 @@ public class UserRepository implements BaseRepository<User, String> {
 
     writeInFile(userList);
     return Optional.of(user);
+  }
+
+  @Override
+  public void delete(String id) throws IOException {
+    writeInFile(
+        findAll().stream()
+            .filter((oldUser) -> !oldUser.getId().equals(id))
+            .collect(Collectors.toList()));
   }
 
   protected static void writeInFile(List<User> list) throws IOException {

@@ -14,4 +14,6 @@ public interface BaseRepository<T, I> {
   Optional<T> create(T t) throws IOException;
 
   Optional<T> update(T t) throws IOException;
+
+  void delete(I id) throws IOException;
 }

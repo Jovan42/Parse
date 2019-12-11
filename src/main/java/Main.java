@@ -2,7 +2,6 @@ import anotations.Controller;
 import anotations.Entity;
 import com.google.gson.Gson;
 import controllers.BaseController;
-import controllers.UserController;
 import org.reflections.Reflections;
 
 import java.io.File;
@@ -18,7 +17,7 @@ public class Main {
 
   public static void main(String[] args) {
     createJsonFiles();
-      initializeControllers();
+    initializeControllers();
     //    UserService userService = new UserService();
     //    try {
     //      User user = userService.create(new User("Jovan", "Manojlovic", "123456789",
@@ -55,15 +54,16 @@ public class Main {
   }
 
   private static void initializeControllers() {
-      Reflections reflections = new Reflections("controllers");
-      Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Controller.class);
-      annotated.forEach((item) -> {
+    Reflections reflections = new Reflections("controllers");
+    Set<Class<?>> annotated = reflections.getTypesAnnotatedWith(Controller.class);
+    annotated.forEach(
+        (item) -> {
           try {
-              Object o = item.getConstructors()[0].newInstance();
-              ((BaseController) o).init();
+            Object o = item.getConstructors()[0].newInstance();
+            ((BaseController) o).init();
           } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
-              e.printStackTrace();
+            e.printStackTrace();
           }
-      });
+        });
   }
 }

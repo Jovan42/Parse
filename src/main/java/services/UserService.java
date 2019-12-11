@@ -11,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-public class UserService implements BaseService<User, String> {
+public class UserService implements BaseService<String, String> {
 
   private UserRepository userRepository = new UserRepository();
   private Gson gson = new Gson();
@@ -37,7 +37,12 @@ public class UserService implements BaseService<User, String> {
   public String update (String sUser) throws IOException {
     User user = gson.fromJson(sUser, User.class);
     validate(user);
-    return gson.toJson(userRepository.create(user).orElseThrow(NotFoundException::new));
+    return gson.toJson(userRepository.update(user).orElseThrow(NotFoundException::new));
+  }
+
+  @Override
+  public void delete(String id) throws IOException {
+     userRepository.delete(id);
   }
 
   @Override

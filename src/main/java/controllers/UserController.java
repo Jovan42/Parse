@@ -32,11 +32,19 @@ public class UserController implements BaseController {
           return userService.create(req.body());
         });
     put(
-            "/users",
-            (req, res) -> {
-              res.type("application/json");
+        "/users",
+        (req, res) -> {
+          res.type("application/json");
 
-              return userService.update(req.body());
-            });
+          return userService.update(req.body());
+        });
+
+    delete(
+        "/users/:id",
+        (req, res) -> {
+          res.type("application/json");
+          userService.delete(req.params(":id"));
+          return "";
+        });
   }
 }
