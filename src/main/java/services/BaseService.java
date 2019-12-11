@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface BaseService<T, I> {
 
-  T findById(I id) throws FileNotFoundException;
+  String findById(I id) throws FileNotFoundException;
 
-  List<T> findAll() throws FileNotFoundException;
+  String findAll() throws FileNotFoundException;
 
-  T create(T t) throws IOException;
+  String create(String t) throws IOException;
 
-  T update(T t) throws IOException;
+  String update(String t) throws IOException;
 
   void validate(User user) throws BadRequestException;
 }

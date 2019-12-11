@@ -1,10 +1,9 @@
 import anotations.Entity;
 import com.google.gson.Gson;
+import controllers.UserController;
 import exceptions.BadRequestException;
-import exceptions.NotFoundException;
 import model.User;
 import org.reflections.Reflections;
-import repositories.UserRepository;
 import services.UserService;
 
 import java.io.File;
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Optional;
 import java.util.Set;
 
 public class Main {
@@ -20,16 +18,18 @@ public class Main {
 
   public static void main(String[] args) {
     createJsonFiles();
-    UserService userService = new UserService();
-    try {
-      User user = userService.create(new User("Jovan", "Manojlovic", "123456789", "jovan123"));
+    UserController.init();
 
-      user.setUsername("jovan123");
-      userService.update(user);
-
-    } catch (IOException | BadRequestException e) {
-      e.printStackTrace();
-    }
+//    UserService userService = new UserService();
+//    try {
+//      User user = userService.create(new User("Jovan", "Manojlovic", "123456789", "jovan123"));
+//
+//      user.setUsername("jovan123");
+//      userService.update(user);
+//
+//    } catch (IOException | BadRequestException e) {
+//      e.printStackTrace();
+//    }
   }
 
   private static void createJsonFiles() {

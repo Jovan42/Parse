@@ -1,5 +1,6 @@
 package services;
 
+import com.google.gson.Gson;
 import exceptions.BadRequestException;
 import exceptions.NotFoundException;
 import model.User;
@@ -12,28 +13,31 @@ import java.util.Map;
 
 public class UserService implements BaseService<User, String> {
 
-  UserRepository userRepository = new UserRepository();
+  private UserRepository userRepository = new UserRepository();
+  private Gson gson = new Gson();
 
   @Override
-  public User findById(String id) throws FileNotFoundException {
-    return userRepository.findById(id).orElseThrow(NotFoundException::new);
+  public String findById(String id) throws FileNotFoundException {
+    return gson.toJson(userRepository.findById(id).orElseThrow(NotFoundException::new));
   }
 
   @Override
-  public List<User> findAll() throws FileNotFoundException {
-    return userRepository.findAll();
+  public String findAll() throws FileNotFoundException {
+    return gson.toJson(userRepository.findAll());
   }
 
   @Override
-  public User create(User user) throws IOException {
+  public String create(String sUser) throws IOException {
+    User user = gson.fromJson(sUser, User.class);
     validate(user);
-    return userRepository.create(user).orElseThrow(NotFoundException::new);
+    return gson.toJson(userRepository.create(user).orElseThrow(NotFoundException::new));
   }
 
   @Override
-  public User update(User user) throws IOException {
+  public String update (String sUser) throws IOException {
+    User user = gson.fromJson(sUser, User.class);
     validate(user);
-    return userRepository.update(user).orElseThrow(NotFoundException::new);
+    return gson.toJson(userRepository.create(user).orElseThrow(NotFoundException::new));
   }
 
   @Override
