@@ -1,14 +1,17 @@
 package model;
 
-import anotations.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+import java.util.List;
+import java.util.Map;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BaseEntity {
-    private String id;
+public abstract class BaseEntity {
+  protected String id;
+
+  public abstract Map<String, List<String>> validate();
 }

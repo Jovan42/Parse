@@ -1,4 +1,3 @@
 package anotations;
 
-public @interface Entity {
-}
+public @interface Entity {}
