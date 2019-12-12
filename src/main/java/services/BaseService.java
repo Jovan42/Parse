@@ -1,6 +1,7 @@
 package services;
 
 import exceptions.BadRequestException;
+import model.BaseEntity;
 import model.impls.User;
 
 import java.io.FileNotFoundException;
@@ -8,15 +9,15 @@ import java.io.IOException;
 
 public interface BaseService<T, I> {
 
-  T findById(I id) throws FileNotFoundException;
+  T findById(I id) throws Throwable;
 
   T findAll() throws FileNotFoundException;
 
-  T create(T t) throws IOException;
+  T create(T t) throws Throwable;
 
-  T update(T t) throws IOException;
+  T update(T t) throws Throwable;
 
   void delete(I id) throws IOException;
 
-  void validate(User user) throws BadRequestException;
+  void validate(BaseEntity t) throws BadRequestException;
 }

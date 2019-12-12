@@ -30,7 +30,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL + "/:id",
         (req, res) -> {
           res.type("application/json");
-          return service.findById(req.params(":id"));
+            try {
+                return service.findById(req.params(":id"));
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            return "";
         });
   }
 
@@ -39,7 +44,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL,
         (req, res) -> {
           res.type("application/json");
-          return service.create(req.body());
+            try {
+                return service.create(req.body());
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            return "";
         });
   }
 
@@ -48,7 +58,13 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL,
         (req, res) -> {
           res.type("application/json");
-          return service.update(req.body());
+            try {
+                return service.update(req.body());
+            } catch (Throwable throwable) {
+                throwable.printStackTrace();
+            }
+            return "";
+
         });
   }
 

@@ -1,11 +1,13 @@
 package repositories;
 
+import model.BaseEntity;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-public interface BaseRepository<T, I> {
+public interface BaseRepository<T extends BaseEntity, I> {
 
   Optional<T> findById(I id) throws FileNotFoundException;
 
