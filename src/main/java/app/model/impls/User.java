@@ -1,11 +1,11 @@
 package app.model.impls;
 
 import app.anotations.Entity;
+import app.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import app.model.BaseEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;

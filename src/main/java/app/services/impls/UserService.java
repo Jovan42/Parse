@@ -1,12 +1,12 @@
 package app.services.impls;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
 import app.exceptions.NotFoundException;
 import app.model.BaseEntity;
 import app.model.dto.LoginDto;
 import app.model.impls.User;
 import app.repositories.impls.UserRepository;
 import app.services.AbstractService;
+import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.io.FileNotFoundException;
 

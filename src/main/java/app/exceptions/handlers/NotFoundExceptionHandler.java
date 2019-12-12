@@ -1,7 +1,7 @@
 package app.exceptions.handlers;
 
-import com.google.gson.Gson;
 import app.exceptions.NotFoundException;
+import com.google.gson.Gson;
 import spark.ExceptionHandler;
 import spark.Request;
 import spark.Response;

@@ -32,21 +32,25 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   }
 
   @Override
-  public List<HashMap<String, Object>> findAllWhere(List<Clause> clauses) throws FileNotFoundException {
+  public List<HashMap<String, Object>> findAllWhere(List<Clause> clauses)
+      throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
-    List<HashMap<String, Object>> entities = gson.fromJson(reader, new TypeToken<List<HashMap<String, Object>>>() {
-    }.getType());
+    List<HashMap<String, Object>> entities =
+        gson.fromJson(reader, new TypeToken<List<HashMap<String, Object>>>() {}.getType());
 
-    List<HashMap<String, Object>> collect = entities.stream().filter((entity) -> {
-      boolean toReturn = true;
-      for (Clause clause : clauses) {
-        if (entity.containsKey(clause.getField()) && !entity.get(clause.getField()).equals(clause.getValue())) {
-          toReturn = false;
-        }
-      }
-      return toReturn;
-    }).collect(Collectors.toList());
-    return collect;
+    return entities.stream()
+        .filter(
+            (entity) -> {
+              boolean toReturn = true;
+              for (Clause clause : clauses) {
+                if (entity.containsKey(clause.getField())
+                    && !entity.get(clause.getField()).equals(clause.getValue())) {
+                  toReturn = false;
+                }
+              }
+              return toReturn;
+            })
+        .collect(Collectors.toList());
   }
 
   @Override

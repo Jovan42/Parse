@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Clause {
-    private String field;
-    private String value;
+  private String field;
+  private String value;
 }

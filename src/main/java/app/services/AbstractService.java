@@ -1,10 +1,11 @@
 package app.services;
 
-import com.google.gson.Gson;
 import app.exceptions.BadRequestException;
 import app.exceptions.NotFoundException;
 import app.model.BaseEntity;
 import app.repositories.BaseRepository;
+import app.repositories.Clause;
+import com.google.gson.Gson;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -29,6 +30,11 @@ public class AbstractService implements BaseService<String, String> {
   @Override
   public String findAll() throws FileNotFoundException {
     return gson.toJson(repository.findAll());
+  }
+
+  @Override
+  public String findAllWhere(List<Clause> clauses) throws FileNotFoundException {
+    return gson.toJson(repository.findAllWhere(clauses));
   }
 
   @Override
