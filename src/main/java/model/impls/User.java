@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import model.BaseEntity;
-import model.Editable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,20 +15,11 @@ import java.util.Map;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class User extends BaseEntity implements Editable<User> {
+public class User extends BaseEntity {
   private String firstName;
   private String lastName;
   private String password;
   private String username;
-
-  @Override
-  public User edit(User newData) {
-    this.firstName = newData.getFirstName();
-    this.lastName = newData.getLastName();
-    this.password = newData.getPassword();
-    this.username = newData.getUsername();
-    return this;
-  }
 
   @Override
   public Map<String, List<String>> validate() {
@@ -49,5 +39,15 @@ public class User extends BaseEntity implements Editable<User> {
       map.put("username", errorList);
     }
     return map;
+  }
+
+  @Override
+  public BaseEntity edit(BaseEntity newData) {
+    User newUser = (User) newData;
+    this.firstName = newUser.getFirstName();
+    this.lastName = newUser.getLastName();
+    this.password = newUser.getPassword();
+    this.username = newUser.getUsername();
+    return this;
   }
 }

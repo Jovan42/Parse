@@ -17,11 +17,7 @@ public class NotFoundExceptionHandler implements ExceptionHandler {
     res.status(404);
     res.type("application/json");
     NotFoundException notFoundException = (NotFoundException) e;
-    String description =
-        notFoundException.getEntity()
-            + " with id '"
-            + notFoundException.getId()
-            + "' can not be found.";
+    String description = notFoundException.getMessage();
     res.body(
         gson.toJson(
             new ErrorMessage(404, "NOT FOUND", req.url(), new Date().getTime(), description)));

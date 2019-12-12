@@ -1,5 +1,5 @@
 package model;
 
-public interface Editable<T> {
-  T edit(T newData);
+public interface Editable {
+  BaseEntity edit(BaseEntity newData);
 }

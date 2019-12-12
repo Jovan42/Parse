@@ -1,7 +1,6 @@
 package services.impls;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.google.gson.Gson;
 import exceptions.NotFoundException;
 import model.BaseEntity;
 import model.dto.LoginDto;
@@ -17,6 +16,7 @@ public class UserService extends AbstractService {
     super();
     repository = new UserRepository();
     type = User.class;
+    notFoundMessage = "User that you looking for does not exist.";
   }
 
   @Override
@@ -28,7 +28,7 @@ public class UserService extends AbstractService {
         BCrypt.with(BCrypt.Version.VERSION_2A).hashToString(12, user.getPassword().toCharArray());
     user.setPassword(hash);
     return gson.toJson(
-        repository.create(user).orElseThrow(() -> new NotFoundException("User", user.getId())));
+        repository.create(user).orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   @Override
@@ -40,7 +40,7 @@ public class UserService extends AbstractService {
         BCrypt.with(BCrypt.Version.VERSION_2A).hashToString(12, user.getPassword().toCharArray());
     user.setPassword(hash);
     return gson.toJson(
-        repository.update(user).orElseThrow(() -> new NotFoundException("User", user.getId())));
+        repository.update(user).orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   public String findByUsername(String username) throws FileNotFoundException {
@@ -48,7 +48,7 @@ public class UserService extends AbstractService {
     return gson.toJson(
         userRepository
             .findByUsername(username)
-            .orElseThrow(() -> new NotFoundException("User", username)));
+            .orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   public boolean logIn(String loginDtoString) throws FileNotFoundException {
@@ -58,7 +58,7 @@ public class UserService extends AbstractService {
     User user =
         userRepository
             .findByUsername(loginDto.getUsername())
-            .orElseThrow(() -> new NotFoundException("User", loginDto.getUsername()));
+            .orElseThrow(() -> new NotFoundException(notFoundMessage));
     return BCrypt.verifyer()
         .verify(loginDto.getPassword().getBytes(), user.getPassword().getBytes())
         .verified;

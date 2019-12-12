@@ -12,16 +12,17 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
-public abstract class AbstractService implements BaseService<String, String> {
+public class AbstractService implements BaseService<String, String> {
 
   protected BaseRepository repository;
   protected Gson gson = new Gson();
   protected Type type;
+  protected String notFoundMessage = "Entity that you looking for does not exist.";
 
   @Override
   public String findById(String id) throws Throwable {
     return gson.toJson(
-        repository.findById(id).orElseThrow(() -> new NotFoundException("User", id)));
+        repository.findById(id).orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   @Override
@@ -34,7 +35,7 @@ public abstract class AbstractService implements BaseService<String, String> {
     BaseEntity entity = gson.fromJson(sUser, type);
     validate(entity);
     return gson.toJson(
-        repository.create(entity).orElseThrow(() -> new NotFoundException("User", entity.getId())));
+        repository.create(entity).orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   @Override
@@ -42,7 +43,7 @@ public abstract class AbstractService implements BaseService<String, String> {
     BaseEntity entity = gson.fromJson(sUser, type);
     validate(entity);
     return gson.toJson(
-        repository.update(entity).orElseThrow(() -> new NotFoundException("User", entity.getId())));
+        repository.update(entity).orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   @Override

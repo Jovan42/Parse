@@ -1,5 +1,7 @@
 package controllers;
 
+import exceptions.BadRequestException;
+import exceptions.NotFoundException;
 import services.BaseService;
 import spark.Spark;
 
@@ -30,12 +32,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL + "/:id",
         (req, res) -> {
           res.type("application/json");
-            try {
-                return service.findById(req.params(":id"));
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-            return "";
+          try {
+            return service.findById(req.params(":id"));
+          } catch (Throwable throwable) {
+              catchExceptions(throwable);
+          }
+          return "";
         });
   }
 
@@ -44,12 +46,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL,
         (req, res) -> {
           res.type("application/json");
-            try {
-                return service.create(req.body());
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-            return "";
+          try {
+            return service.findById(req.params(":id"));
+          } catch (Throwable throwable) {
+              catchExceptions(throwable);
+          }
+          return "";
         });
   }
 
@@ -58,13 +60,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         BASE_URL,
         (req, res) -> {
           res.type("application/json");
-            try {
-                return service.update(req.body());
-            } catch (Throwable throwable) {
-                throwable.printStackTrace();
-            }
-            return "";
-
+          try {
+            return service.findById(req.params(":id"));
+          } catch (Throwable throwable) {
+              catchExceptions(throwable);
+          }
+          return "";
         });
   }
 
@@ -77,4 +78,15 @@ public abstract class BaseController<S extends BaseService> implements Initializ
           return "";
         });
   }
+
+  private void catchExceptions(Throwable throwable) {
+      if (throwable instanceof BadRequestException) {
+          throw (BadRequestException) throwable;
+      }
+      if (throwable instanceof NotFoundException) {
+          throw (NotFoundException) throwable;
+      }
+        throwable.printStackTrace();
+  }
+
 }
