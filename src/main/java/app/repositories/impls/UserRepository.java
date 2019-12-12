@@ -9,6 +9,8 @@ import app.repositories.AbstractRepository;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -22,7 +24,10 @@ public class UserRepository extends AbstractRepository {
   @Override
   public List<BaseEntity> findAll() throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
-    return gson.fromJson(reader, new TypeToken<List<User>>() {}.getType());
+    Object o = gson.fromJson(reader, new TypeToken<List<HashMap>>() {
+    }.getType());
+
+    return new ArrayList<>();
   }
 
   public Optional<User> findByUsername(String username) throws FileNotFoundException {

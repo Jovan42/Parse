@@ -4,7 +4,9 @@ import app.model.BaseEntity;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface BaseRepository<T extends BaseEntity, I> {
@@ -12,6 +14,8 @@ public interface BaseRepository<T extends BaseEntity, I> {
   Optional<T> findById(I id) throws FileNotFoundException;
 
   List<T> findAll() throws FileNotFoundException;
+
+  List<HashMap<String, Object>> findAllWhere(List<Clause> clauses) throws FileNotFoundException;
 
   Optional<T> create(T t) throws IOException;
 

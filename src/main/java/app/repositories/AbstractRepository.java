@@ -1,15 +1,16 @@
 package app.repositories;
 
+import app.model.BaseEntity;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
-import app.model.BaseEntity;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -28,6 +29,24 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   public List<BaseEntity> findAll() throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
     return gson.fromJson(reader, new TypeToken<List<BaseEntity>>() {}.getType());
+  }
+
+  @Override
+  public List<HashMap<String, Object>> findAllWhere(List<Clause> clauses) throws FileNotFoundException {
+    JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
+    List<HashMap<String, Object>> entities = gson.fromJson(reader, new TypeToken<List<HashMap<String, Object>>>() {
+    }.getType());
+
+    List<HashMap<String, Object>> collect = entities.stream().filter((entity) -> {
+      boolean toReturn = true;
+      for (Clause clause : clauses) {
+        if (entity.containsKey(clause.getField()) && !entity.get(clause.getField()).equals(clause.getValue())) {
+          toReturn = false;
+        }
+      }
+      return toReturn;
+    }).collect(Collectors.toList());
+    return collect;
   }
 
   @Override
