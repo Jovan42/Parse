@@ -12,6 +12,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public class AbstractService implements BaseService<String, String> {
 
   protected BaseRepository repository;

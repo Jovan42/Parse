@@ -10,6 +10,7 @@ import app.services.AbstractService;
 
 import java.io.FileNotFoundException;
 
+@SuppressWarnings("unchecked")
 public class UserService extends AbstractService {
 
   public UserService() {

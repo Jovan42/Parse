@@ -6,6 +6,7 @@ import app.services.impls.UserService;
 import spark.Spark;
 
 @Controller
+@SuppressWarnings("unused")
 public class UserController extends BaseController<UserService> {
 
   public void init() {

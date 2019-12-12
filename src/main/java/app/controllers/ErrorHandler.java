@@ -8,6 +8,7 @@ import app.exceptions.handlers.NotFoundExceptionHandler;
 import spark.Spark;
 
 @Controller
+@SuppressWarnings("unused")
 public class ErrorHandler implements Initialize {
   @Override
   public void init() {

@@ -5,6 +5,7 @@ import app.exceptions.NotFoundException;
 import app.services.BaseService;
 import spark.Spark;
 
+@SuppressWarnings({"rawtypes", "unchecked"})
 public abstract class BaseController<S extends BaseService> implements Initialize {
   protected String BASE_URL;
   protected S service;

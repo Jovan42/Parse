@@ -3,6 +3,7 @@ package app.model.impls;
 import app.anotations.Entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import app.model.BaseEntity;
 
@@ -15,6 +16,7 @@ import java.util.Map;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
   private String firstName;
   private String lastName;
@@ -42,12 +44,11 @@ public class User extends BaseEntity {
   }
 
   @Override
-  public BaseEntity edit(BaseEntity newData) {
+  public void edit(BaseEntity newData) {
     User newUser = (User) newData;
     this.firstName = newUser.getFirstName();
     this.lastName = newUser.getLastName();
     this.password = newUser.getPassword();
     this.username = newUser.getUsername();
-    return this;
   }
 }
