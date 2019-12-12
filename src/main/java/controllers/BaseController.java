@@ -35,7 +35,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
           try {
             return service.findById(req.params(":id"));
           } catch (Throwable throwable) {
-              catchExceptions(throwable);
+            catchExceptions(throwable);
           }
           return "";
         });
@@ -49,7 +49,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
           try {
             return service.findById(req.params(":id"));
           } catch (Throwable throwable) {
-              catchExceptions(throwable);
+            catchExceptions(throwable);
           }
           return "";
         });
@@ -63,7 +63,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
           try {
             return service.findById(req.params(":id"));
           } catch (Throwable throwable) {
-              catchExceptions(throwable);
+            catchExceptions(throwable);
           }
           return "";
         });
@@ -80,13 +80,12 @@ public abstract class BaseController<S extends BaseService> implements Initializ
   }
 
   private void catchExceptions(Throwable throwable) {
-      if (throwable instanceof BadRequestException) {
-          throw (BadRequestException) throwable;
-      }
-      if (throwable instanceof NotFoundException) {
-          throw (NotFoundException) throwable;
-      }
-        throwable.printStackTrace();
+    if (throwable instanceof BadRequestException) {
+      throw (BadRequestException) throwable;
+    }
+    if (throwable instanceof NotFoundException) {
+      throw (NotFoundException) throwable;
+    }
+    throwable.printStackTrace();
   }
-
 }

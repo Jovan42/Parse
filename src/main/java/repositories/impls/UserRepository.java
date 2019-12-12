@@ -27,17 +27,17 @@ public class UserRepository extends AbstractRepository {
 
   public Optional<User> findByUsername(String username) throws FileNotFoundException {
     return findAll().stream()
-            .map((user) -> (User) user)
-            .filter((user) -> (user).getUsername().equals(username))
-            .findFirst();
+        .map((user) -> (User) user)
+        .filter((user) -> (user).getUsername().equals(username))
+        .findFirst();
   }
 
   @Override
   public void delete(String id) throws IOException {
     writeInFile(
-            findAll().stream()
-                    .map((user) -> (User) user)
-                    .filter((oldUser) -> !oldUser.getId().equals(id))
-                    .collect(Collectors.toList()));
+        findAll().stream()
+            .map((user) -> (User) user)
+            .filter((oldUser) -> !oldUser.getId().equals(id))
+            .collect(Collectors.toList()));
   }
 }

@@ -17,19 +17,8 @@ public class Main {
   public static void main(String[] args) {
     createJsonFiles();
     initializeControllers();
-      AuthMiddleware authMiddleware = new AuthMiddleware();
-      authMiddleware.init();
-    //    UserService userService = new UserService();
-    //    try {
-    //      User user = userService.create(new User("Jovan", "Manojlovic", "123456789",
-    // "jovan123"));
-    //
-    //      user.setUsername("jovan123");
-    //      userService.update(user);
-    //
-    //    } catch (IOException | BadRequestException e) {
-    //      e.printStackTrace();
-    //    }
+    AuthMiddleware authMiddleware = new AuthMiddleware();
+    authMiddleware.init();
   }
 
   @SuppressWarnings("ResultOfMethodCallIgnored")

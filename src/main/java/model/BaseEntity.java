@@ -10,7 +10,7 @@ import java.util.Map;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class BaseEntity implements Editable{
+public abstract class BaseEntity implements Editable {
   protected String id;
 
   public abstract Map<String, List<String>> validate();

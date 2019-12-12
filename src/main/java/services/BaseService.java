@@ -2,7 +2,6 @@ package services;
 
 import exceptions.BadRequestException;
 import model.BaseEntity;
-import model.impls.User;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

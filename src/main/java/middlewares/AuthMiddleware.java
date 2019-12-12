@@ -5,16 +5,15 @@ import spark.Spark;
 
 public class AuthMiddleware implements Initialize {
 
-    @Override
-    public void init() {
+  @Override
+  public void init() {
     Spark.before(
         "/users/*",
         (req, res) -> {
-            String user = req.session().attribute("user");
-            if ( user == null) {
+          String user = req.session().attribute("user");
+          if (user == null) {
             req.session().attribute("user", "user");
-          }
-          else System.out.println(user);
+          } else System.out.println(user);
         });
-    }
+  }
 }

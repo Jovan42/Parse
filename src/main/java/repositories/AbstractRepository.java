@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -58,7 +57,6 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   public void delete(String id) throws IOException {
     writeInFile(
         findAll().stream()
-
             .filter((oldUser) -> !oldUser.getId().equals(id))
             .collect(Collectors.toList()));
   }
