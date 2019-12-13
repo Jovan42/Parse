@@ -25,7 +25,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
     delete();
   }
 
-  public void get() {
+  protected void get() {
     Spark.get(
         BASE_URL,
         (req, res) -> {
@@ -39,7 +39,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         });
   }
 
-  private List<Clause> queryParamsToList(Request req) {
+  protected List<Clause> queryParamsToList(Request req) {
     List list = new ArrayList();
     req.queryParams()
         .forEach(
@@ -49,7 +49,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
     return list;
   }
 
-  public void getById() {
+  protected void getById() {
     Spark.get(
         BASE_URL + "/:id",
         (req, res) -> {
@@ -63,7 +63,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         });
   }
 
-  public void post() {
+  protected void post() {
     Spark.post(
         BASE_URL,
         (req, res) -> {
@@ -77,7 +77,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         });
   }
 
-  public void put() {
+  protected void put() {
     Spark.put(
         BASE_URL,
         (req, res) -> {

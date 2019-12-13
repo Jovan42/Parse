@@ -11,6 +11,7 @@ public class UserRepository extends AbstractRepository {
   public UserRepository() {
     FILE_PATH = FILE_PATH + User.class.getCanonicalName() + ".json";
     type = User.class;
+    arrayType = User[].class;
   }
 
   public Optional<User> findByUsername(String username) throws FileNotFoundException {

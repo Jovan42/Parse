@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,7 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   protected String FILE_PATH = "./data/";
   protected Gson gson = new Gson();
   protected Type type;
+  protected Type arrayType;
 
   @Override
   public Optional<BaseEntity> findById(String id) throws FileNotFoundException {
@@ -30,21 +32,12 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   @Override
   public List<BaseEntity> findAll() throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
-    List<HashMap<String, String>> map =
-        gson.fromJson(reader, new TypeToken<List<HashMap<String, String>>>() {}.getType());
-
-    return map.stream()
-        .map(
-            (element) -> {
-              String elementString = gson.toJson(element);
-              return (BaseEntity) gson.fromJson(elementString, type);
-            })
-        .collect(Collectors.toList());
+    BaseEntity[] array = gson.fromJson(reader, arrayType);
+    return Arrays.asList(array);
   }
 
   @Override
-  public List<HashMap<String, Object>> findAllWhere(List<Clause> clauses)
-      throws FileNotFoundException {
+  public List<BaseEntity> findAllWhere(List<Clause> clauses) throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
     List<HashMap<String, Object>> entities =
         gson.fromJson(reader, new TypeToken<List<HashMap<String, Object>>>() {}.getType());
@@ -60,6 +53,11 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
                 }
               }
               return toReturn;
+            })
+        .map(
+            (element) -> {
+              String elementString = gson.toJson(element);
+              return (BaseEntity) gson.fromJson(elementString, type);
             })
         .collect(Collectors.toList());
   }
@@ -91,16 +89,10 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   public void delete(String id) throws IOException {
 
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
-    List<HashMap<String, String>> map =
-        gson.fromJson(reader, new TypeToken<List<HashMap<String, String>>>() {}.getType());
+    BaseEntity[] array = gson.fromJson(reader, arrayType);
 
     writeInFile(
-        map.stream()
-            .map(
-                (element) -> {
-                  String elementString = gson.toJson(element);
-                  return (BaseEntity) gson.fromJson(elementString, type);
-                })
+        Arrays.stream(array)
             .filter((element) -> !element.getId().equals(id))
             .collect(Collectors.toList()));
   }
