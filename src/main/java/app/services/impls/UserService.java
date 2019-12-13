@@ -5,19 +5,17 @@ import app.model.BaseEntity;
 import app.model.dto.LoginDto;
 import app.model.impls.User;
 import app.repositories.impls.UserRepository;
-import app.services.AbstractService;
+import app.services.CrudService;
 import at.favre.lib.crypto.bcrypt.BCrypt;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
 
 @SuppressWarnings("unchecked")
-public class UserService extends AbstractService {
+public class UserService extends CrudService {
 
-  public UserService() {
-    super();
-    repository = new UserRepository();
-    type = User.class;
-    notFoundMessage = "User that you looking for does not exist.";
+  public UserService(Type type, Type arrayType, String notFoundMessage) {
+    super(type, arrayType, notFoundMessage);
   }
 
   @Override
@@ -42,14 +40,6 @@ public class UserService extends AbstractService {
     user.setPassword(hash);
     return gson.toJson(
         repository.update(user).orElseThrow(() -> new NotFoundException(notFoundMessage)));
-  }
-
-  public String findByUsername(String username) throws FileNotFoundException {
-    UserRepository userRepository = (UserRepository) repository;
-    return gson.toJson(
-        userRepository
-            .findByUsername(username)
-            .orElseThrow(() -> new NotFoundException(notFoundMessage)));
   }
 
   public boolean logIn(String loginDtoString) throws FileNotFoundException {

@@ -1,17 +1,16 @@
 package app.repositories.impls;
 
 import app.model.impls.User;
-import app.repositories.AbstractRepository;
+import app.repositories.CrudRepository;
 
 import java.io.FileNotFoundException;
+import java.lang.reflect.Type;
 import java.util.Optional;
 
-public class UserRepository extends AbstractRepository {
+public class UserRepository extends CrudRepository {
 
-  public UserRepository() {
-    FILE_PATH = FILE_PATH + User.class.getCanonicalName() + ".json";
-    type = User.class;
-    arrayType = User[].class;
+  public UserRepository(Type type, Type arrayType) {
+    super(type, arrayType);
   }
 
   public Optional<User> findByUsername(String username) throws FileNotFoundException {

@@ -1,6 +1,7 @@
 package app.repositories;
 
 import app.model.BaseEntity;
+import com.google.common.collect.Lists;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -33,7 +34,7 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   public List<BaseEntity> findAll() throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
     BaseEntity[] array = gson.fromJson(reader, arrayType);
-    return Arrays.asList(array);
+    return Lists.newArrayList(array);
   }
 
   @Override

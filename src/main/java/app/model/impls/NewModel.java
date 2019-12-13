@@ -17,19 +17,18 @@ import java.util.Map;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class NewModel extends BaseEntity {
-    private String field1;
-    private String field2;
+  private String field1;
+  private String field2;
 
-    @Override
-    public Map<String, List<String>> validate() {
-        return new HashMap<>();
-    }
+  @Override
+  public Map<String, List<String>> validate() {
+    return new HashMap<>();
+  }
 
-    @Override
-    public void edit(BaseEntity newData) {
-        NewModel newModel = (NewModel) newData;
-        this.field1 = newModel.getField1();
-        this.field2 = newModel.getField2();
-    }
+  @Override
+  public void edit(BaseEntity newData) {
+    NewModel newModel = (NewModel) newData;
+    this.field1 = newModel.getField1();
+    this.field2 = newModel.getField2();
+  }
 }
-

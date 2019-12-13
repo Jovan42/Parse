@@ -2,6 +2,7 @@ package app.controllers.impls;
 
 import app.anotations.Controller;
 import app.controllers.BaseController;
+import app.model.impls.User;
 import app.services.impls.UserService;
 import spark.Spark;
 
@@ -10,7 +11,7 @@ import spark.Spark;
 public class UserController extends BaseController<UserService> {
 
   public void init() {
-    service = new UserService();
+    service = new UserService(User.class, User[].class, "User ");
     super.init();
     Spark.post(
         BASE_URL + "/login",

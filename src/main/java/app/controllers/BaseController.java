@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.anotations.Controller;
+import app.anotations.NotFound;
 import app.exceptions.BadRequestException;
 import app.exceptions.NotFoundException;
 import app.repositories.Clause;
@@ -16,10 +17,20 @@ import java.util.Set;
 public abstract class BaseController<S extends BaseService> implements Initialize {
   protected String BASE_URL;
   protected S service;
+  protected Class type;
+  protected Class arrayType;
+  protected String notFoundMessage;
 
   @Override
   public void init() {
     BASE_URL = getClass().getAnnotation(Controller.class).baseUrl();
+    notFoundMessage = "";
+    type = getClass().getAnnotation(Controller.class).type();
+    arrayType = getClass().getAnnotation(Controller.class).arrayType();
+    NotFound notFound = getClass().getAnnotation(NotFound.class);
+    if (notFound != null) {
+      notFoundMessage = notFound.message();
+    }
 
     get();
     getById();
@@ -45,8 +56,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
   protected List<Clause> queryParamsToList(Request req) {
     List list = new ArrayList();
     req.queryParams()
-        .forEach(
-            (paramKey) -> list.add(new Clause(paramKey, req.queryMap(paramKey).value())));
+        .forEach((paramKey) -> list.add(new Clause(paramKey, req.queryMap(paramKey).value())));
     return list;
   }
 
@@ -70,7 +80,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         (req, res) -> {
           res.type("application/json");
           try {
-            return service.findById(req.params(":id"));
+            return service.create(req.body());
           } catch (Throwable throwable) {
             catchExceptions(throwable);
           }
@@ -84,7 +94,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
         (req, res) -> {
           res.type("application/json");
           try {
-            return service.findById(req.params(":id"));
+            return service.update(req.body());
           } catch (Throwable throwable) {
             catchExceptions(throwable);
           }
