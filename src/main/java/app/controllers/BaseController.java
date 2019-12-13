@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.anotations.Controller;
 import app.exceptions.BadRequestException;
 import app.exceptions.NotFoundException;
 import app.repositories.Clause;
@@ -18,6 +19,8 @@ public abstract class BaseController<S extends BaseService> implements Initializ
 
   @Override
   public void init() {
+    BASE_URL = getClass().getAnnotation(Controller.class).baseUrl();
+
     get();
     getById();
     post();
@@ -43,9 +46,7 @@ public abstract class BaseController<S extends BaseService> implements Initializ
     List list = new ArrayList();
     req.queryParams()
         .forEach(
-            (paramKey) -> {
-              list.add(new Clause(paramKey, req.queryMap(paramKey).value()));
-            });
+            (paramKey) -> list.add(new Clause(paramKey, req.queryMap(paramKey).value())));
     return list;
   }
 

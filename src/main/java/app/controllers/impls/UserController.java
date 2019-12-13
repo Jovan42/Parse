@@ -5,13 +5,12 @@ import app.controllers.BaseController;
 import app.services.impls.UserService;
 import spark.Spark;
 
-@Controller
+@Controller(baseUrl = "/users")
 @SuppressWarnings("unused")
 public class UserController extends BaseController<UserService> {
 
   public void init() {
     service = new UserService();
-    BASE_URL = "/users";
     super.init();
     Spark.post(
         BASE_URL + "/login",
