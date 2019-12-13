@@ -8,6 +8,7 @@ import com.google.gson.stream.JsonReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public abstract class AbstractRepository implements BaseRepository<BaseEntity, String> {
   protected String FILE_PATH = "./data/";
   protected Gson gson = new Gson();
+  protected Type type;
 
   @Override
   public Optional<BaseEntity> findById(String id) throws FileNotFoundException {
@@ -28,7 +30,16 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
   @Override
   public List<BaseEntity> findAll() throws FileNotFoundException {
     JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
-    return gson.fromJson(reader, new TypeToken<List<BaseEntity>>() {}.getType());
+    List<HashMap<String, String>> map =
+        gson.fromJson(reader, new TypeToken<List<HashMap<String, String>>>() {}.getType());
+
+    return map.stream()
+        .map(
+            (element) -> {
+              String elementString = gson.toJson(element);
+              return (BaseEntity) gson.fromJson(elementString, type);
+            })
+        .collect(Collectors.toList());
   }
 
   @Override
@@ -78,9 +89,19 @@ public abstract class AbstractRepository implements BaseRepository<BaseEntity, S
 
   @Override
   public void delete(String id) throws IOException {
+
+    JsonReader reader = new JsonReader(new FileReader(FILE_PATH));
+    List<HashMap<String, String>> map =
+        gson.fromJson(reader, new TypeToken<List<HashMap<String, String>>>() {}.getType());
+
     writeInFile(
-        findAll().stream()
-            .filter((oldUser) -> !oldUser.getId().equals(id))
+        map.stream()
+            .map(
+                (element) -> {
+                  String elementString = gson.toJson(element);
+                  return (BaseEntity) gson.fromJson(elementString, type);
+                })
+            .filter((element) -> !element.getId().equals(id))
             .collect(Collectors.toList()));
   }
 
