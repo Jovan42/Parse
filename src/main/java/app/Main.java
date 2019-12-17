@@ -2,9 +2,11 @@ package app;
 
 import app.anotations.Controller;
 import app.anotations.Entity;
+import app.anotations.NotEmpty;
 import app.anotations.NotNull;
 import app.anotations.Valid;
 import app.controllers.Initialize;
+import app.exceptions.BadRequestException;
 import app.middlewares.AuthMiddleware;
 import app.model.impls.User;
 import org.reflections.Reflections;
@@ -32,7 +34,7 @@ public class Main {
     AuthMiddleware authMiddleware = new AuthMiddleware();
     authMiddleware.init();
 
-    User s = new User(null, "last", "pass", "user");
+    User s = new User("", "last", "pass", "user");
       try {
           method(s);
       } catch (NoSuchMethodException e) {
@@ -59,6 +61,14 @@ public class Main {
                                   e.printStackTrace();
                               }
                           }
+                          if(fieldAnnotation.annotationType().equals(NotEmpty.class)) {
+                              try {
+                                  String s = (String) u.getClass().getDeclaredMethod("get" + field.getName().substring(0, 1).toUpperCase() + field.getName().substring(1)).invoke(u);
+                                  if (s == null || s.equalsIgnoreCase("")) errors.add(field.getName() + " can not be empty");
+                              } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                                  e.printStackTrace();
+                              }
+                          }
                       }));
                   }));
               }
@@ -66,6 +76,9 @@ public class Main {
           i[0]++;
       });
       errors.forEach(System.out::println);
+      if(!errors.isEmpty()) {
+        throw new BadRequestException(errors);
+      }
 
   }
 

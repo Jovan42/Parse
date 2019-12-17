@@ -1,3 +1,11 @@
 package app.exceptions;
 
-public class BadRequestException extends RuntimeException {}
+import java.util.List;
+
+public class BadRequestException extends RuntimeException {
+    List<String> errorMessages;
+
+    public BadRequestException(List<String> errorMessages) {
+        this.errorMessages = errorMessages;
+    }
+}

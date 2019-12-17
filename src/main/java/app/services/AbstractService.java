@@ -10,6 +10,7 @@ import com.google.gson.Gson;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -62,7 +63,7 @@ public class AbstractService implements BaseService<String, String> {
   public void validate(BaseEntity entity) {
     Map<String, List<String>> validate = entity.validate();
     if (validate.size() > 0) {
-      throw new BadRequestException();
+      throw new BadRequestException(new ArrayList<>());
     }
   }
 }
