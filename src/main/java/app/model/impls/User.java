@@ -1,6 +1,7 @@
 package app.model.impls;
 
 import app.anotations.Entity;
+import app.anotations.NotNull;
 import app.model.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,9 +19,13 @@ import java.util.Map;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class User extends BaseEntity {
+  @NotNull
   private String firstName;
+  @NotNull
   private String lastName;
+  @NotNull
   private String password;
+  @NotNull
   private String username;
 
   @Override
